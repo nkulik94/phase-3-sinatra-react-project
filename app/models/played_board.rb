@@ -40,24 +40,25 @@ class PlayedBoard < ActiveRecord::Base
     end
 
     def update_high_score high_score
-        if !board[high_score] || turn_count < board[high_score]
-            board.update(high_score: turn_count)
+        if !self.board[high_score] || turn_count < board[high_score]
+            self.board[high_score] = turn_count
+            self.board.save
         end
     end
 
     def update_full_score
         update(turns_to_full: turn_count)
-        #update_high_score(:full_high_score)
+        update_high_score(:full_high_score)
     end
 
     def update_x_score
         update(turns_to_x: turn_count)
-        #update_high_score(:x_high_score)
+        update_high_score(:x_high_score)
     end
 
     def update_line_score
         update(turns_to_line: turn_count)
-        #update_high_score(:line_high_score)
+        update_high_score(:line_high_score)
     end
 
     def handle_match index
