@@ -40,7 +40,7 @@ class PlayedBoard < ActiveRecord::Base
     end
 
     def update_high_score high_score
-        if !self.board[high_score] || turn_count < board[high_score]
+        if !self.board[high_score] || turn_count < self.board[high_score]
             self.board[high_score] = turn_count
             self.board.save
         end
@@ -66,16 +66,6 @@ class PlayedBoard < ActiveRecord::Base
         update_full_score if is_full?
         update_x_score if !self.turns_to_x && has_x?
         update_line_score if !self.turns_to_line && has_line?
-        # if is_full?
-        #     update(turns_to_full: turn_count)
-        #     update_high_score(:full_high_score)
-        # elsif !self.turns_to_x && has_x?
-        #     update(turns_to_x: turn_count)
-        #     update_high_score(:x_high_score)
-        # elsif !self.turns_to_line && has_line?
-        #     update(turns_to_line: turn_count)
-        #     update_high_score(:line_high_score)
-        # end
     end
 
     def play_round num
@@ -86,6 +76,6 @@ class PlayedBoard < ActiveRecord::Base
     end
 
     def sim_play
-        play_round(unused_nums.split(' ').sample)
+        play_round(unused_nums.split(' ').sample) until self.is_full?
     end
 end
