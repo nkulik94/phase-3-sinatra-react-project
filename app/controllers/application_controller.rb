@@ -23,12 +23,20 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/users" do
-    new_user = Player.create(
-      name: params[:name],
-      username: params[:username],
-      password: params[:password]
-    )
-    new_user.to_json
+    return_user = Player.find_by(username: params[:username], password: params[:password])
+    new_user = params[:name]
+    if new_user
+      if !Player.find_by(username: params[:username])
+        new_user = Player.create(
+          name: params[:name],
+          username: params[:username],
+          password: params[:password]
+        )
+        new_user.to_json
+      end
+    elsif return_user
+      return_user.to_json
+    end
   end
 
   delete "/users/:id" do
