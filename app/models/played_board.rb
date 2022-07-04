@@ -45,14 +45,6 @@ class PlayedBoard < ActiveRecord::Base
         layout_arr.find_index num
     end
 
-    def pick_num
-        new_num = unused_nums_arr.sample
-        remove_from_unused(new_num)
-        count_turn
-        match = get_match(new_num)
-        handle_match(match) if match
-    end
-
     def handle_match index
         update_filled_spaces(index)
         if is_full?
@@ -62,5 +54,17 @@ class PlayedBoard < ActiveRecord::Base
         elsif !turns_to_line && has_line?
             update(turns_to_line: turn_count)
         end
+    end
+
+    def play_round num
+        remove_from_unused(num)
+        count_turn
+        match = get_match(num)
+        handle_match(match) if match
+    end
+
+    def sim_play
+        play_round(unused_nums_arr.sample)
+        sim_play unless is_full?
     end
 end
