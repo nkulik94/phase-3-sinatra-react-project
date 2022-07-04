@@ -7,8 +7,8 @@ Board.generate_board until Board.all.count == 20
 5.times do
     name = Faker::Name.name
     username = Faker::Beer.brand.gsub(/\s+/, "")
-    #password = Faker::Types.rb_string
-    Player.create(name: name, username: username, password: password)
+    password = Password.create(password: Faker::Types.rb_string)
+    Player.create(name: name, username: username, password_id: password[:id])
 end
 
 
@@ -23,6 +23,6 @@ end
 #         new_game.sim_play
 #         puts new_game[:turn_count]
 #     end
-end
+# end
 
 puts "✅ Done seeding!"

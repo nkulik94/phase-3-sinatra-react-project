@@ -10,13 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_03_132205) do
+ActiveRecord::Schema.define(version: 2022_07_04_232152) do
 
   create_table "boards", force: :cascade do |t|
     t.string "layout"
     t.integer "line_high_score"
     t.integer "x_high_score"
     t.integer "full_high_score"
+  end
+
+  create_table "passwords", force: :cascade do |t|
+    t.string "password"
   end
 
   create_table "played_boards", force: :cascade do |t|
@@ -33,7 +37,7 @@ ActiveRecord::Schema.define(version: 2022_07_03_132205) do
   create_table "players", force: :cascade do |t|
     t.string "name"
     t.string "username"
-    t.string "password"
+    t.integer "password_id"
   end
 
 end
