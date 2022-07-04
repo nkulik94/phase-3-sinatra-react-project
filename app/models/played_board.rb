@@ -19,7 +19,7 @@ class PlayedBoard < ActiveRecord::Base
         update(turn_count: count + 1)
     end
 
-    def update_unused_nums num
+    def remove_from_unused num
         unused_nums_arr.delete num
         update(unused_nums: unused_nums_arr.join(' '))
     end
@@ -30,24 +30,37 @@ class PlayedBoard < ActiveRecord::Base
     end
 
     def has_line?
-        Board::LINE_WIN_COMBINATIONS.find { |combo| (combo - filled_spaces_arr).empty? }
+        turns_to_line || Board::LINE_WIN_COMBINATIONS.find { |combo| (combo - filled_spaces_arr).empty? }
     end
 
     def has_x?
-        (Board::X_WIN - filled_spaces_arr).empty?
+        turns_to_x || (Board::X_WIN - filled_spaces_arr).empty?
+    end
+
+    def is_full?
+        filled_spaces_arr.count == 25
+    end
+
+    def get_match num
+        layout_arr.find_index num
     end
 
     def pick_num
         new_num = unused_nums_arr.sample
-        update_unused_nums(new_num)
-        check_for_match(new_num)
-    end
-
-    def check_for_match num
-        layout_arr.find_index num
+        remove_from_unused(new_num)
+        count_turn
+        match = get_match(new_num)
+        handle_match(match) if match
     end
 
     def handle_match index
-
+        update_filled_spaces(index)
+        if is_full?
+            update(turns_to_full: turn_count)
+        elsif !turns_to_x && has_x?
+            update(turns_to_x: turn_count)
+        elsif !turns_to_line && has_line?
+            update(turns_to_line: turn_count)
+        end
     end
 end
