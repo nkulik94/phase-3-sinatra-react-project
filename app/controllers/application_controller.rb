@@ -1,3 +1,5 @@
+require 'pry'
+
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
   
@@ -53,6 +55,13 @@ class ApplicationController < Sinatra::Base
     unused_nums = (0..99).to_a.join(' ')
     new_board = PlayedBoard.create(player_id: params[:player_id], board_id: params[:board_id], unused_nums: unused_nums)
     new_board.to_json
+  end
+
+  patch "/played-boards/:id" do
+    current_board = PlayedBoard.find(params[:id])
+    new_num = (current_board.unused_nums.split(' ') - params[:unused_nums].split(' ')).first
+    current_board.play_round new_num
+    current_board.to_json
   end
 
 end
