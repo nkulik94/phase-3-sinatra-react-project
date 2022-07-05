@@ -49,8 +49,10 @@ class ApplicationController < Sinatra::Base
     user.to_json
   end
 
-  # post "/played-boards" do
-  #   unused_nums = 
-  # end
+  post "/played-boards" do
+    unused_nums = (0..99).to_a.join(' ')
+    new_board = PlayedBoard.create(player_id: params[:player_id], board_id: params[:board_id], unused_nums: unused_nums)
+    new_board.to_json
+  end
 
 end
