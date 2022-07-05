@@ -34,9 +34,11 @@ class ApplicationController < Sinatra::Base
           username: params[:username],
           password_id: new_password[:id]
         )
+        new_user.password_id = nil
         new_user.to_json(include: {played_boards: {include: :board}})
       end
     elsif return_user && return_user.password.password == params[:password]
+      return_user.password_id = nil
       return_user.to_json(include: {played_boards: {include: :board}})
     end
   end
@@ -46,5 +48,9 @@ class ApplicationController < Sinatra::Base
     user.destroy
     user.to_json
   end
+
+  # post "/played-boards" do
+  #   unused_nums = 
+  # end
 
 end

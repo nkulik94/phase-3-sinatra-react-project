@@ -20,7 +20,7 @@ class Board < ActiveRecord::Base
     X_WIN = (LINE_WIN_COMBINATIONS[LINE_WIN_COMBINATIONS.count - 2] + LINE_WIN_COMBINATIONS.last).uniq
 
     def self.generate_board
-        layout = (0..99).to_a.shuffle.take(25)
+        layout = (1..50).to_a.shuffle.take(25)
         find_or_create_by(layout: layout.join(' '))
     end
 end
