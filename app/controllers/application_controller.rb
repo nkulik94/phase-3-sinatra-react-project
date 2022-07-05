@@ -14,6 +14,7 @@ class ApplicationController < Sinatra::Base
 
   get "/users/:id" do
     user = Player.find(params[:id])
+    user.password_id = nil
     user.to_json(include: {played_boards: {include: :board}})
   end
 
@@ -23,20 +24,21 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/users" do
-    # return_user = Player.find_by(username: params[:username], password: params[:password])
-    # new_user = params[:name]
-    # if new_user
-    #   if !Player.find_by(username: params[:username])
-    #     new_user = Player.create(
-    #       name: params[:name],
-    #       username: params[:username],
-    #       password: params[:password]
-    #     )
-    #     new_user.to_json
-    #   end
-    # elsif return_user
-    #   return_user.to_json
-    # end
+    return_user = Player.find_by(username: params[:username])
+    new_user = params[:name]
+    if new_user
+      if !Player.find_by(username: params[:username])
+        new_password = Password.create(password: params[:password])
+        new_user = Player.create(
+          name: params[:name],
+          username: params[:username],
+          password_id: new_password[:id]
+        )
+        new_user.to_json(include: {played_boards: {include: :board}})
+      end
+    elsif return_user && return_user.password.password == params[:password]
+      return_user.to_json(include: {played_boards: {include: :board}})
+    end
   end
 
   delete "/users/:id" do
