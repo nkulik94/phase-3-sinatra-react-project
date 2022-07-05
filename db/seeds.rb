@@ -18,7 +18,7 @@ Player.all.each do |player|
     puts "player #{player[:id]}"
     Board.all.each do |board|
         puts "board #{board[:id]}"
-        unused_nums = (1..50).to_a.join(' ')
+        unused_nums = (0..99).to_a.join(' ')
         new_game = PlayedBoard.create(player_id: player[:id], board_id: board[:id], unused_nums: unused_nums)
         new_game.sim_play
         puts new_game[:turn_count]
