@@ -23,4 +23,16 @@ class Board < ActiveRecord::Base
         layout = (0..99).to_a.shuffle.take(25)
         find_or_create_by(layout: layout.join(' '))
     end
+
+    def new_high_score score_type
+        scores_arr = self.played_boards.order(score_type).filter { |board| board[score_type] }
+        scores_arr.first[score_type]
+    end
+
+    def reset_high_scores
+        line_high = new_high_score :turns_to_line
+        x_high = new_high_score :turns_to_x
+        full_high = new_high_score :turns_to_full
+        update(line_high_score: line_high, x_high_score: x_high, full_high_score: full_high)
+    end
 end
