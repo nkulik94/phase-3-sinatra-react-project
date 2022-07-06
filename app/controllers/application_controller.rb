@@ -61,7 +61,7 @@ class ApplicationController < Sinatra::Base
     current_board = PlayedBoard.find(params[:id])
     new_num = (current_board.unused_nums.split(' ') - params[:unused_nums].split(' ')).first
     current_board.play_round new_num
-    current_board.to_json
+    current_board.to_json(include: :board)
   end
 
   delete "/played-boards/:id" do
