@@ -66,13 +66,14 @@ class ApplicationController < Sinatra::Base
 
   delete "/played-boards/:id" do
     current_board = PlayedBoard.find(params[:id])
-    player_id = current_board.player_id
+    # player_id = current_board.player_id
     board_id = current_board.board_id
     unused_nums = (0..99).to_a.join(' ')
     current_board.destroy
     Board.find(board_id).reset_high_scores
-    new_board = PlayedBoard.create(player_id: player_id, board_id: board_id, unused_nums: unused_nums)
-    new_board.to_json
+    current_board.to_json
+    # new_board = PlayedBoard.create(player_id: player_id, board_id: board_id, unused_nums: unused_nums)
+    # new_board.to_json
   end
 
 end
