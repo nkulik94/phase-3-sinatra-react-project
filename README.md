@@ -2,7 +2,7 @@
 
 ## What it is
 
-This is the backend for a bingo-playing app, and it is the main part of a project for Flatiron School. It uses the [Active Record](https://guides.rubyonrails.org/active_record_basics.html) ORM with a [SQLite](https://www.sqlite.org/index.html) database to handle all the information that it needs to store and interact with. The routes are set up using [Sinatra](http://sinatrarb.com/). The frontend repo is located [here](https://github.com/nkulik94/sinatra-react-bingo-frontend).
+This is the backend for a bingo-playing app, and it is the main part of a project for Flatiron School. The original repo that this was forked from is a template provided by Flatiron with most of the configuration set up so that I wouldn't have to do it myself, to my great relief. It uses the [Active Record](https://guides.rubyonrails.org/active_record_basics.html) ORM with a [SQLite](https://www.sqlite.org/index.html) database to handle all the information that it needs to store and interact with. The routes are set up using [Sinatra](http://sinatrarb.com/). The frontend repo is located [here](https://github.com/nkulik94/sinatra-react-bingo-frontend).
 
 ## How to run it
 
