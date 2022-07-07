@@ -35,6 +35,7 @@ This app uses a relational database with many-to-many and one-to-many relationsh
 
 This table contains the high scores (fewest turns) for that particular board. The layout is an array of 25 random integers between 0 and 99, joined into a string (separated by spaces) so that it can be stored in the table. The frontend is responsible for separating it back into an array and populating the visual representation of the bingo board with the numbers, as well as joining it back to a string before sending it back.
 
+#### `played_boards` table (join table), split into two because it's got a bunch of columns:
 
 ##### Part one:
 
