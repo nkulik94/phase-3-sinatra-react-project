@@ -1,4 +1,4 @@
-puts "🌱 Seeding spices..."
+puts "Seeding..."
 
 # generate 20 unique boards
 Board.generate_board until Board.all.count == 20
@@ -25,4 +25,4 @@ Player.all.each do |player|
     end
 end
 
-puts "✅ Done seeding!"
+puts "Done seeding!"
