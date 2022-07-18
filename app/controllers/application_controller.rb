@@ -30,12 +30,14 @@ class ApplicationController < Sinatra::Base
     if new_user
       if !Player.find_by(username: params[:username])
         new_password = Password.create(password: params[:password])
-        new_user = Player.create(
+        new_user = new_password.players.create(
+        #new_user = Player.create(
           name: params[:name],
           username: params[:username],
-          password_id: new_password[:id]
+          #password_id: new_password[:id]
         )
         new_user.password_id = nil
+
         new_user.to_json(include: {played_boards: {include: :board}})
       end
     elsif return_user && return_user.password.password == params[:password]

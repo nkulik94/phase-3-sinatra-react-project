@@ -24,7 +24,7 @@ This app uses a relational database with many-to-many and one-to-many relationsh
 | -------- | -------------- |
 | `<some number>` | `<some string>` |
 
-> Originally the passwords were part of the user table, I split it off into its own table so that only the backend has access to them. The backend takes care of validating logins, so I figured it would be more secure this way. I have no idea what the convention is with this type of thing, so I just did it my way.
+> Originally the passwords were part of the user table, I split it off into its own table so that only the backend has access to them. The backend takes care of validating logins, so I figured it would be more secure this way. This project was built without the help of Rails or any built-in validation methods so I kinda just made up how to do this.
 
 #### `boards` table:
 
@@ -58,7 +58,7 @@ Lot to unpack here. This is a join table to allow a many-to-many relationship be
 
 `GET "/boards"` - Sends all of the boards table rows as instances of the `Board` class, including all instances of `PlayedBoard` associated with each board, and each `Player` associated with each `PlayedBoard`.  
 
-`POST "/users"` - This is an interesting one. As I mentioned, the login validation is handled by the backend. `POST` was the obvious choice for creating a new account, but an existing user logging in wasn't as clear. I ultimately settled on using `POST` because the login information was being sent by the frontend to be handled by the backend. The information sent by the frontend is validated, processed, and depending on the `params` of the request the server either creates and sends back new account information or sends the information for the existing user in the response.  
+`POST "/users"` - This is an interesting one. As I mentioned, the login validation is handled by code that I made up. `POST` was the obvious choice for creating a new account, but an existing user logging in wasn't as clear. I ultimately settled on using `POST` because the login information was being sent by the frontend to be handled by the backend. The information sent by the frontend is validated, processed, and depending on the `params` of the request the server either creates and sends back new account information or sends the information for the existing user in the response.  
 
 `POST "/played-boards"` - Instantiates a new `PlayedBoard` and sends it back  
 
